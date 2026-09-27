@@ -24,12 +24,19 @@ import {
   Star,
   BadgeCheck,
   Eye,
-  Users
+  Users,
+  BookOpen,
+  Calendar,
+  X,
+  Share2,
+  ExternalLink
 } from 'lucide-react';
+import { articles, Article } from './data/articles';
 
 export default function App() {
   const [copiedPhone, setCopiedPhone] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
 
   const phoneNumber = '09104203220';
   const whatsappUrl = `https://wa.me/989104203220?text=${encodeURIComponent(
@@ -150,20 +157,22 @@ export default function App() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           
           {/* Logo & Brand Identity */}
-          <a href="#" className="flex items-center gap-3 group">
-            <div className="relative w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 rounded-2xl p-1 bg-[#064E3B] shadow-sm border border-amber-400/40 flex items-center justify-center overflow-hidden">
-              <img
-                src="logo.png"
-                alt="لوگوی طلایی حج متین"
-                className="w-full h-full object-contain aspect-square select-none"
-                loading="eager"
-              />
-            </div>
-            <div className="flex flex-col">
-              <div className="flex items-center gap-1.5">
-                <span className="text-xl sm:text-2xl font-black text-[#064E3B] tracking-tight">حج متین</span>
-                <span className="inline-block w-2 h-2 rounded-full bg-[#D97706]"></span>
+          <div className="flex items-center gap-3">
+            <a href="#" className="flex-shrink-0 group" aria-label="صفحه اصلی حج متین">
+              <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-2xl p-1 bg-[#064E3B] shadow-sm border border-amber-400/40 flex items-center justify-center overflow-hidden">
+                <img
+                  src="logo.png"
+                  alt="لوگوی طلایی حج متین"
+                  className="w-full h-full object-contain aspect-square select-none"
+                  loading="eager"
+                />
               </div>
+            </a>
+            <div className="flex flex-col">
+              <a href="#" className="flex items-center gap-1.5 group">
+                <span className="text-xl sm:text-2xl font-black text-[#064E3B] tracking-tight group-hover:text-[#043629] transition-colors">حج متین</span>
+                <span className="inline-block w-2 h-2 rounded-full bg-[#D97706]"></span>
+              </a>
               {/* Trust Badge - Link to Instagram */}
               <a
                 href="https://www.instagram.com/hajjematin"
@@ -176,7 +185,18 @@ export default function App() {
                 <span>بیش از ۹۰,۰۰۰ همراه در اینستاگرام</span>
               </a>
             </div>
-          </a>
+          </div>
+
+          {/* Desktop Nav Links */}
+          <nav className="hidden md:flex items-center gap-5 text-xs font-semibold text-gray-700">
+            <a href="#pricing" className="hover:text-[#064E3B] transition-colors">قیمت روز فیش</a>
+            <a href="#reviews" className="hover:text-[#064E3B] transition-colors">رضایت خریداران</a>
+            <a href="#articles" className="hover:text-[#064E3B] transition-colors text-emerald-800 font-bold flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D97706]"></span>
+              <span>راهنمای خرید و مقالات</span>
+            </a>
+            <a href="#faq" className="hover:text-[#064E3B] transition-colors">پرسش‌های متداول</a>
+          </nav>
 
           {/* Support Phone & Copy Button */}
           <div className="flex items-center gap-2">
@@ -653,8 +673,94 @@ export default function App() {
           </div>
         </section>
 
+        {/* Professional SEO Articles & Guides Section (دانشنامه و مقالات تخصصی حج عمره) */}
+        <section className="py-8 sm:py-10 border-t border-gray-200/60" id="articles">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-50 border border-emerald-800/15 text-[#064E3B] text-xs font-semibold mb-2">
+              <BookOpen className="w-3.5 h-3.5 text-[#D97706]" />
+              <span>دانشنامه و مقالات تخصصی حج عمره مفرده</span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-bold text-[#064E3B] mb-1">راهنمای جامع خرید فیش حج عمره و قوانین روز</h2>
+            <p className="text-xs sm:text-sm text-gray-500 max-w-xl mx-auto">
+              مجموعه مقالات موثق درباره قیمت روز، نحوه انتقال قانونی، استعلام اصالت و آموزش خرید غیرحضوری فیش عمره
+            </p>
+          </div>
+
+          {/* Articles Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+            {articles.map((art) => (
+              <article
+                key={art.id}
+                className="bg-white rounded-2xl border border-gray-200/90 shadow-2xs hover:shadow-xs transition-all overflow-hidden flex flex-col justify-between"
+              >
+                <div className="p-5">
+                  <div className="flex items-center justify-between text-[11px] text-gray-400 mb-2">
+                    <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 font-semibold border border-emerald-200/60">
+                      {art.category}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Clock className="w-3 h-3 text-gray-400" />
+                      {art.readTime}
+                    </span>
+                  </div>
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2 leading-snug hover:text-[#064E3B] transition-colors">
+                    {art.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4">
+                    {art.shortDesc}
+                  </p>
+                  <div className="flex flex-wrap gap-1.5 mb-2">
+                    {art.focusKeywords.slice(0, 3).map((kw, kIdx) => (
+                      <span key={kIdx} className="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-md font-medium">
+                        #{kw.replace(/\s+/g, '_')}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="p-4 bg-gray-50/70 border-t border-gray-100 flex items-center justify-between">
+                  <span className="text-xs text-gray-500 font-medium">{art.author}</span>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedArticle(art)}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#064E3B] hover:bg-[#043629] text-white text-xs font-bold transition-all shadow-2xs active:scale-95 cursor-pointer"
+                  >
+                    <span>مطالعه کامل مقاله</span>
+                    <ArrowLeft className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          {/* Bottom SEO Callout */}
+          <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-800/15 text-center max-w-2xl mx-auto">
+            <p className="text-xs sm:text-sm text-gray-700 mb-2">
+              سوالی درباره <strong>خرید فیش حج عمره</strong> یا شرایط انتقال دارید که در مقالات پاسخ داده نشده است؟
+            </p>
+            <div className="flex items-center justify-center gap-3">
+              <a
+                href={`tel:${phoneNumber}`}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#064E3B] text-white text-xs font-bold shadow-xs hover:bg-[#033427] transition-all"
+              >
+                <Phone className="w-3.5 h-3.5" />
+                <span>تماس مستقیم با کارشناس</span>
+                <span dir="ltr">0910 420 3220</span>
+              </a>
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 px-4 py-2 rounded-xl bg-[#25D366] text-white text-xs font-bold shadow-xs hover:bg-[#20ba5a] transition-all"
+              >
+                <MessageCircle className="w-3.5 h-3.5" />
+                <span>پیام در واتساپ</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
         {/* FAQ Section */}
-        <section className="py-6 sm:py-8 border-t border-gray-200/60 mb-6">
+        <section className="py-6 sm:py-8 border-t border-gray-200/60 mb-6" id="faq">
           <div className="text-center mb-6">
             <h2 className="text-xl sm:text-2xl font-bold text-[#064E3B] mb-1">پرسش‌های متداول خریداران</h2>
             <p className="text-xs sm:text-sm text-gray-500">پاسخ به سوالات متداول متقاضیان خرید فیش حج عمره</p>
@@ -718,6 +824,100 @@ export default function App() {
 
         </div>
       </footer>
+
+      {/* Article Reader Modal */}
+      {selectedArticle && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-xs overflow-y-auto">
+          <div className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-emerald-900/15 overflow-hidden my-auto max-h-[90vh] flex flex-col">
+            
+            {/* Modal Header */}
+            <div className="p-4 sm:p-5 bg-gradient-to-r from-[#064E3B] to-[#043629] text-white flex items-center justify-between flex-shrink-0">
+              <div className="flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-amber-400" />
+                <span className="text-xs font-bold text-amber-300 px-2.5 py-0.5 rounded-full bg-white/10">
+                  {selectedArticle.category}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedArticle(null)}
+                className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+                title="بستن پنجره"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-5 sm:p-7 overflow-y-auto space-y-4 text-right">
+              <h2 className="text-lg sm:text-2xl font-black text-[#064E3B] leading-snug">
+                {selectedArticle.title}
+              </h2>
+              
+              <div className="flex flex-wrap items-center gap-4 text-xs text-gray-400 border-b border-gray-100 pb-3">
+                <span>نویسنده: {selectedArticle.author}</span>
+                <span>•</span>
+                <span className="flex items-center gap-1">
+                  <Clock className="w-3.5 h-3.5 text-gray-400" />
+                  {selectedArticle.readTime}
+                </span>
+                <span>•</span>
+                <span>به‌روزرسانی: {selectedArticle.dateModified}</span>
+              </div>
+
+              {/* Table of contents */}
+              <div className="bg-amber-50/70 border border-amber-800/15 rounded-2xl p-4 my-3">
+                <span className="font-bold text-xs text-[#B45309] block mb-2">فهرست سرفصل‌های این مقاله:</span>
+                <ul className="list-disc list-inside space-y-1 text-xs text-gray-700">
+                  {selectedArticle.tableOfContents.map((toc, tIdx) => (
+                    <li key={tIdx}>{toc}</li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* HTML Content */}
+              <div
+                className="prose prose-sm max-w-none text-gray-700 leading-relaxed space-y-3"
+                dangerouslySetInnerHTML={{ __html: selectedArticle.contentHtml }}
+              />
+
+              {/* Tags */}
+              <div className="pt-4 border-t border-gray-100">
+                <span className="text-xs text-gray-400 block mb-2">کلمات کلیدی مقاله:</span>
+                <div className="flex flex-wrap gap-1.5">
+                  {selectedArticle.focusKeywords.map((kw, idx) => (
+                    <span key={idx} className="text-xs bg-emerald-50 text-emerald-800 px-2.5 py-1 rounded-lg border border-emerald-800/15 font-medium">
+                      #{kw}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Footer Call to Action */}
+            <div className="p-4 bg-gray-50 border-t border-gray-200 flex flex-wrap items-center justify-between gap-3 flex-shrink-0">
+              <span className="text-xs text-gray-600 font-medium">سوالی درباره این مطلب دارید؟</span>
+              <div className="flex items-center gap-2">
+                <a
+                  href={`tel:${phoneNumber}`}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#064E3B] text-white text-xs font-bold hover:bg-[#033427] transition-all"
+                >
+                  <Phone className="w-3.5 h-3.5" />
+                  <span>تماس: 09104203220</span>
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setSelectedArticle(null)}
+                  className="px-3.5 py-2 rounded-xl bg-gray-200 hover:bg-gray-300 text-gray-700 text-xs font-bold transition-all cursor-pointer"
+                >
+                  بستن
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      )}
 
       {/* Fixed Bottom Sticky Bar for Mobile Users */}
       <div className="fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur-md border-t border-gray-200/90 p-2.5 shadow-lg md:hidden">
